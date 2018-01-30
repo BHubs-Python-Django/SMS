@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Notices</title>
+</head>
+<body>
+    {% for notice in noticeList %}
+        <h1>{{ notice.notice_title }}</h1>
+        <h3>{{ notice.notice_from }}</h3>
+        <p>{{ notice.notice_description }}</p>
+    {% endfor %}
+</body>
+</html>

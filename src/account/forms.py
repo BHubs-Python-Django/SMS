@@ -2,25 +2,30 @@ from django import forms
 from . import models
 from django.contrib.auth import authenticate
 
-
 import re
 from django.utils.timezone import now
 
 
-#user registration form
+# user registration form
 class RegistrationForm(forms.Form):
     member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'))
     school = forms.ModelChoiceField(models.School.objects.all(), required=False)
-    username = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
-    name = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
-    email = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'email'}))
-    phone = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
-    address = forms.CharField( required=False, max_length= 10000 ,widget=forms.Textarea )
-    account_type = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
-    password1 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'email'}))
-    password2 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
+    username = forms.CharField(max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
+    name = forms.CharField(max_length=255, required=False,
+                           widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
+    email = forms.CharField(max_length=255, required=False,
+                            widget=forms.TextInput(attrs={'class': 'validate', 'id': 'email'}))
+    phone = forms.CharField(max_length=255, required=False,
+                            widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
+    address = forms.CharField(required=False, max_length=10000, widget=forms.Textarea)
+    account_type = forms.CharField(max_length=255, required=False,
+                                   widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix'}))
+    password1 = forms.CharField(max_length=20, required=False,
+                                widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'email'}))
+    password2 = forms.CharField(max_length=20, required=False,
+                                widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
     photo = forms.ImageField(required=False)
-
 
     def clean(self):
         member_type = self.cleaned_data.get('member_type')
@@ -45,7 +50,8 @@ class RegistrationForm(forms.Form):
                 if len(email) < 1:
                     raise forms.ValidationError("Enter email address!")
                 else:
-                    email_correction = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+                    email_correction = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$',
+                                                email)
                     if email_correction == None:
                         raise forms.ValidationError("Email not correct!")
                     else:
@@ -71,10 +77,11 @@ class RegistrationForm(forms.Form):
         password1 = self.cleaned_data.get('password1')
         photo = self.cleaned_data.get('photo')
 
-        user = models.UserProfile.objects.create_user(username=username, email=email, name=name, phone=phone, address=address, school=school, photo=photo)
+        user = models.UserProfile.objects.create_user(username=username, email=email, name=name, phone=phone,
+                                                      address=address, school=school, photo=photo)
         user.set_password(password1)
 
-        #if official set account type 'admin' or 'superuser'
+        # if official set account type 'admin' or 'superuser'
         if account_type == 'admin' or account_type == 'superuser':
             user.is_staff = True
             user.is_superuser = True
@@ -88,10 +95,12 @@ class RegistrationForm(forms.Form):
         return user
 
 
-#login form
+# login form
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix',}))
-    password = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
+    username = forms.CharField(max_length=100, required=False,
+                               widget=forms.TextInput(attrs={'class': 'validate', 'id': 'icon_prefix', }))
+    password = forms.CharField(max_length=20, required=False,
+                               widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
 
     def clean(self):
         username = self.cleaned_data.get('username')
@@ -115,40 +124,40 @@ class LoginForm(forms.Form):
         return user
 
 
-#teacher registration
+# teacher registration
 class RegistrationMemberForm(RegistrationForm):
     member_type = forms.ModelChoiceField(models.AvailableUser.objects.all().exclude(pk=1))
 
 
-#add teacher form
+# add teacher form
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = models.Teacher
         fields = '__all__'
 
 
-#add parent form
+# add parent form
 class ParentForm(forms.ModelForm):
     class Meta:
         model = models.Parent
         fields = '__all__'
 
 
-#add school form
+# add school form
 class SchoolForm(forms.ModelForm):
     class Meta:
         model = models.School
         fields = '__all__'
 
 
-#add student form
+# add student form
 class StudentForm(forms.ModelForm):
     class Meta:
         model = models.Student
         fields = '__all__'
 
 
-#add librarian form
+# add librarian form
 class LibrarianForm(forms.ModelForm):
     class Meta:
         model = models.Librarian
