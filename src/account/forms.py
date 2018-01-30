@@ -8,6 +8,7 @@ from django.utils.timezone import now
 
 # user registration form
 class RegistrationForm(forms.Form):
+<<<<<<< HEAD
     member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'))
     school = forms.ModelChoiceField(models.School.objects.all(), required=False)
     username = forms.CharField(max_length=255, required=False,
@@ -25,6 +26,18 @@ class RegistrationForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'email'}))
     password2 = forms.CharField(max_length=20, required=False,
                                 widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
+=======
+    member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    school = forms.ModelChoiceField(models.School.objects.all(), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    username = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
+    name = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
+    email = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'email'}))
+    phone = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
+    address = forms.CharField( required=False, max_length= 1000 ,widget=forms.Textarea(attrs={'class': 'validate materialize-textarea'}) )
+    account_type = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
+    password1 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate'}))
+    password2 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
+>>>>>>> upstream/master
     photo = forms.ImageField(required=False)
 
     def clean(self):
@@ -89,6 +102,7 @@ class RegistrationForm(forms.Form):
             pass
 
         user.member_type = member_type
+        user.account_type = account_type
         user.last_login = now()
 
         user.save()
@@ -126,7 +140,8 @@ class LoginForm(forms.Form):
 
 # teacher registration
 class RegistrationMemberForm(RegistrationForm):
-    member_type = forms.ModelChoiceField(models.AvailableUser.objects.all().exclude(pk=1))
+    member_type = forms.ModelChoiceField(models.AvailableUser.objects.all().exclude(pk=1), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    school = forms.ModelChoiceField(models.School.objects.all(), required=False, widget=forms.Select(attrs={'class':'input-field'}))
 
 
 # add teacher form
