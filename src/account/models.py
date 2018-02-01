@@ -90,10 +90,7 @@ class Student(models.Model):
     def __str__(self):
         return self.roll
 
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/master
 # librarian registration
 class Librarian(models.Model):
     birthday = models.DateField(null=True, blank=True)

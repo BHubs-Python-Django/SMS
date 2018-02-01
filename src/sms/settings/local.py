@@ -39,14 +39,12 @@ INSTALLED_APPS = [
     # user account functionality app
     'account.apps.AccountConfig',
 
-<<<<<<< HEAD
-    # administration app
-=======
+
     #apps for office work
     'office.apps.OfficeConfig',
 
     #administration app
->>>>>>> upstream/master
+
     'administration.apps.AdministrationConfig',
 
     # notice app
