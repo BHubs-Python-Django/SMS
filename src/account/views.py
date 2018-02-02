@@ -30,7 +30,7 @@ class Registration(View):
     template_name = 'account/registration.html'
 
     def get(self, request):
-        #this variable is to compare user is he has school or not in the template
+        # this variable is to compare user is he has school or not in the template
         current_user_school = request.user.school
 
         regForm = forms.RegistrationForm()
@@ -43,7 +43,7 @@ class Registration(View):
         return render(request, self.template_name, variables)
 
     def post(self, request):
-        #this variable is to compare user is he has school or not in the template
+        # this variable is to compare user is he has school or not in the template
         current_user_school = request.user.school
 
         regForm = forms.RegistrationForm(request.POST or None, request.FILES)
@@ -52,17 +52,17 @@ class Registration(View):
             profile = regForm.registration()
             profile_id = profile.id
 
-            #get available member id from submitting form
+            # get available member id from submitting form
             member_type = request.POST.get("member_type")
 
-            #get available member obj for retrive name of the member type for compare
+            # get available member obj for retrive name of the member type for compare
             member_type_obj = models.AvailableUser.objects.filter(id=member_type)
 
             member_name = False
             for member in member_type_obj:
                 member_name = member.name
 
-            #for school
+            # for school
             if member_name == 'school':
                 return redirect('account:add-school', pk=profile_id)
 
@@ -91,6 +91,8 @@ class Login(View):
 
         if loginForm.is_valid():
             user = loginForm.login()
+            if user.member_type.id == 2:
+                return redirect('teacher_dashboard:teacher_dashboard')
             if user:
                 login(request, user)
                 return redirect('administration:home')

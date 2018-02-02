@@ -28,6 +28,7 @@ urlpatterns = [
 
     url(r'^office/', include('office.urls', namespace='office')),
 
-    url(r'^administartion/', include('administration.urls', namespace='administration')),
+    url(r'^administration/', include('administration.urls', namespace='administration')),
+    url(r'^teacher/', include('teacher_dashboard.urls', namespace='teacher_dashboard')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

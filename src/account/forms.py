@@ -9,8 +9,6 @@ from django.utils.timezone import now
 
 # user registration form
 class RegistrationForm(forms.Form):
-
-
     member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'))
     school = forms.ModelChoiceField(models.School.objects.all(), required=False)
     username = forms.CharField(max_length=255, required=False,
@@ -29,19 +27,25 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(max_length=20, required=False,
                                 widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
 
-    member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(name='office'), required=False,
+                                         widget=forms.Select(attrs={'class': 'input-field'}))
 
-    member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(Q(name='office') | Q(name='school')), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    member_type = forms.ModelChoiceField(models.AvailableUser.objects.filter(Q(name='office') | Q(name='school')),
+                                         required=False, widget=forms.Select(attrs={'class': 'input-field'}))
 
-    school = forms.ModelChoiceField(models.School.objects.all(), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    school = forms.ModelChoiceField(models.School.objects.all(), required=False,
+                                    widget=forms.Select(attrs={'class': 'input-field'}))
     username = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
     name = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
-    email = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate', 'id': 'email'}))
+    email = forms.CharField(max_length=255, required=False,
+                            widget=forms.TextInput(attrs={'class': 'validate', 'id': 'email'}))
     phone = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
-    address = forms.CharField( required=False, max_length= 1000 ,widget=forms.Textarea(attrs={'class': 'validate materialize-textarea'}) )
+    address = forms.CharField(required=False, max_length=1000,
+                              widget=forms.Textarea(attrs={'class': 'validate materialize-textarea'}))
     account_type = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate'}))
     password1 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate'}))
-    password2 = forms.CharField(max_length=20, required=False, widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
+    password2 = forms.CharField(max_length=20, required=False,
+                                widget=forms.PasswordInput(attrs={'class': 'validate', 'id': 'password'}))
 
     photo = forms.ImageField(required=False)
 
@@ -143,24 +147,21 @@ class LoginForm(forms.Form):
         return user
 
 
-<<<<<<< HEAD
-# teacher registration
-=======
-# Member registration
->>>>>>> upstream/master
 class RegistrationMemberForm(RegistrationForm):
-    member_type = forms.ModelChoiceField(models.AvailableUser.objects.all().exclude(Q(pk=1) | Q(pk=4)), required=False, widget=forms.Select(attrs={'class':'input-field'}))
+    member_type = forms.ModelChoiceField(models.AvailableUser.objects.all().exclude(Q(pk=1) | Q(pk=4)), required=False,
+                                         widget=forms.Select(attrs={'class': 'input-field'}))
+
 
 # add teacher form
-<<<<<<< HEAD
-=======
-gender_list = (
-        ('male', 'Male'),
-        ('female', 'Female'),)
 
->>>>>>> upstream/master
+gender_list = (
+    ('male', 'Male'),
+    ('female', 'Female'),)
+
+
 class TeacherForm(forms.ModelForm):
     gender = forms.ChoiceField(choices=gender_list, required=False, widget=forms.Select(attrs={'class': 'validate'}))
+
     class Meta:
         model = models.Teacher
         fields = '__all__'
@@ -178,10 +179,7 @@ class TeacherForm(forms.ModelForm):
             if not gender:
                 raise forms.ValidationError("Select Gender!")
 
-<<<<<<< HEAD
-=======
 
->>>>>>> upstream/master
 # add parent form
 class ParentForm(forms.ModelForm):
     class Meta:
@@ -191,15 +189,13 @@ class ParentForm(forms.ModelForm):
 
 # add school form
 class SchoolForm(forms.ModelForm):
-    address = forms.CharField( required=False, max_length= 1000 ,widget=forms.Textarea(attrs={'class': 'validate materialize-textarea'}) )
+    address = forms.CharField(required=False, max_length=1000,
+                              widget=forms.Textarea(attrs={'class': 'validate materialize-textarea'}))
 
     class Meta:
         model = models.School
         fields = '__all__'
 
-
-<<<<<<< HEAD
-=======
     def clean(self):
         name = self.cleaned_data.get('name')
         description = self.cleaned_data.get('description')
@@ -218,10 +214,10 @@ class SchoolForm(forms.ModelForm):
                 if not phone:
                     raise forms.ValidationError('Enter Phone number!')
 
->>>>>>> upstream/master
-# add student form
+
 class StudentForm(forms.ModelForm):
-    birthday = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate datepicker'}))
+    birthday = forms.CharField(max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'class': 'validate datepicker'}))
     gender = forms.ChoiceField(choices=gender_list, required=False, widget=forms.Select(attrs={'class': 'validate'}))
 
     class Meta:
@@ -246,13 +242,11 @@ class StudentForm(forms.ModelForm):
                     if not school_bus:
                         raise forms.ValidationError('Enter School Bus!')
 
-<<<<<<< HEAD
-=======
 
->>>>>>> upstream/master
 # add librarian form
 class LibrarianForm(forms.ModelForm):
-    birthday = forms.CharField(max_length=255, required=False, widget=forms.TextInput(attrs={'class': 'validate datepicker'}))
+    birthday = forms.CharField(max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'class': 'validate datepicker'}))
     gender = forms.ChoiceField(choices=gender_list, required=False, widget=forms.Select(attrs={'class': 'validate'}))
 
     class Meta:

@@ -25,7 +25,9 @@ def add_notice(request):
             notice_form = NoticeForm(request.POST or None)
             if notice_form.is_valid():
                 new_notice = notice_form.save(commit=False)
-                new_notice.notice_from = request.user
+                new_notice.notice_from = request.user.member_type
+                new_notice.author = request.user
+                new_notice.school = request.user.school
                 new_notice.save()
                 return redirect('notice:all_notice')
         else:

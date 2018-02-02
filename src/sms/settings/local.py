@@ -39,16 +39,18 @@ INSTALLED_APPS = [
     # user account functionality app
     'account.apps.AccountConfig',
 
-
-    #apps for office work
+    # apps for office work
     'office.apps.OfficeConfig',
 
-    #administration app
+    # administration app
 
     'administration.apps.AdministrationConfig',
 
     # notice app
     'notice.apps.NoticeConfig',
+
+    # teacher_dashboard
+    'teacher_dashboard.apps.TeacherDashboardConfig',
 ]
 
 MIDDLEWARE = [
