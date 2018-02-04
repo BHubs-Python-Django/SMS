@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+    <h1>Results</h1>
+    <h2>result of class {{results.student.class}}</h2>
+    {% for result in results %}
+        <h3>{{result.student.student.roll}} ---- {{result.student.result_GPA}}</h3>
+    {% endfor %}
+</body>
+</html>
