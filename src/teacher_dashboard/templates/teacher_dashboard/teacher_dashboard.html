@@ -10,11 +10,20 @@
         <li>Notice</li>
             <ul>
                 <li><a href="{% url 'notice:create_notice' %}">Add Notice</a></li>
-                <li>See Notice</li>
+                <li><a href="{% url 'notice:all_notice' %}">See Notice</a></li>
             </ul>
-        <li><a href="#">Exam</a></li>
-        <li><a href="#">Attendance</a></li>
-        <li><a href="#">Edit</a></li>
+        <li>Exam</li>
+            <ul>
+                <li><a href="{% url 'teacher_dashboard:take_exam' %}">Take Exam</a></li>
+                <li><a href="{% url 'teacher_dashboard:publish_result' %}">Publish result</a></li>
+                <li><a href="{% url 'teacher_dashboard:results' %}">See results</a></li>
+            </ul>
+        <li>Attendance</li>
+            <ul>
+                <li><a href="{% url 'notice:create_notice' %}">New attendance</a></li>
+                <li><a href="{% url 'notice:all_notice' %}">See attendance</a></li>
+            </ul>
+        <li>Edit</li>
     </ul>
 </body>
 </html>

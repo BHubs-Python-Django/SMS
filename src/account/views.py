@@ -92,6 +92,8 @@ class Login(View):
         if loginForm.is_valid():
             user = loginForm.login()
             if user.member_type.id == 2:
+                print(user.school)
+                print(user.is_authenticated())
                 return redirect('teacher_dashboard:teacher_dashboard')
             if user:
                 login(request, user)

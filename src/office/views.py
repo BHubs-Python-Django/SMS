@@ -15,12 +15,12 @@ def check_user(request, pk):
     for user_obj in user_objects:
         user_school_id = user_obj.school.id
 
-    #compare admin school id to requested user school id for same school retrive
+    # compare admin school id to requested user school id for same school retrive
     if user_school_id == request.user.school.id:
         return user_objects
 
 
-#office home page
+# office home page
 class Home(AdminPermission, View):
     template_name = 'office/index.html'
 
@@ -31,7 +31,7 @@ class Home(AdminPermission, View):
         pass
 
 
-#office registration for other official and student, teacher, parent, librarian
+# office registration for other official and student, teacher, parent, librarian
 class Registration(AdminPermission, View):
     template_name = 'office/registration.html'
 
@@ -42,7 +42,7 @@ class Registration(AdminPermission, View):
         pass
 
 
-#member edit view
+# member edit view
 class MemberSearch(AdminPermission, View):
     template_name = 'office/search.html'
 
@@ -72,14 +72,14 @@ class MemberSearch(AdminPermission, View):
         return render(request, self.template_name, variables)
 
 
-#member detail view
+# member detail view
 class MemberDetail(AdminPermission, View):
     template_name = 'office/member-detail.html'
 
     def get(self, request, pk):
         get_object_or_404(models.UserProfile, pk=pk)
 
-        #requested user object
+        # requested user object
         user_objects = models.UserProfile.objects.filter(pk=pk)
 
         user_school_id = None
@@ -88,7 +88,7 @@ class MemberDetail(AdminPermission, View):
         for user_obj in user_objects:
             user_school_id = user_obj.school.id
 
-        #compare admin school id to requested user school id for same school retrive
+        # compare admin school id to requested user school id for same school retrive
         if user_school_id == request.user.school.id:
             viewable_user = user_objects
 
@@ -127,7 +127,8 @@ class MemberEdit(AdminPermission, View):
     def post(self, request, pk):
         get_object_or_404(models.UserProfile, pk=pk)
 
-        member_edit_form = forms.MemberEditForm(request.POST or None, request.FILES, instance=models.UserProfile.objects.get(pk=pk), request=request)
+        member_edit_form = forms.MemberEditForm(request.POST or None, request.FILES,
+                                                instance=models.UserProfile.objects.get(pk=pk), request=request)
 
         check_admin_permission = check_user(request, pk)
 
